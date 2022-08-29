@@ -35,7 +35,6 @@ export default defineComponent({
     },
     trocarTema(modoEscuroAtivo: boolean) {
       this.modoEscuroAtivo = modoEscuroAtivo
-      console.log(modoEscuroAtivo)
     }
   },
 
