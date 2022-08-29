@@ -23,7 +23,7 @@ export default defineComponent({
         iniciar() {
             // Começar Contagem
             this.cronometroRodando = true;
-            this.cronometro = setInterval(() => {
+            this.cronometro = window.setInterval(() => {
                 this.tempoEmSegundos += 1;
             }, 1000);
             console.log("Iniciando");
