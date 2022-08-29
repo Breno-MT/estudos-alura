@@ -23,6 +23,12 @@ export default defineComponent({
 
 <template>
     <section>
-        <strong> {{  tempoDecorrido  }} </strong>
+        <strong class="display"> {{  tempoDecorrido  }} </strong>
     </section>
 </template>
+
+<style>
+.display {
+    color: var(--texto-primario);
+}
+</style>
