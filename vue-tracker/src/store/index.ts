@@ -1,17 +1,21 @@
 import type IProjeto from "@/interfaces/IProjeto";
+import type ITarefa from "@/interfaces/ITarefa";
 import type { InjectionKey } from "vue";
 import { createStore, useStore as vuexUseStore, Store } from "vuex";
 import { ADICIONA_PROJETO, ALTERA_PROJETO, EXCLUIR_PROJETO } from "./tipoMutacoes";
+import { ADICIONA_TAREFA, ATUALIZA_TAREFA, REMOVE_TAREFA } from "./tipoMutacoes";
 
-interface Estado {
-    projetos: IProjeto[]
+interface State {
+    projetos: IProjeto[],
+    tarefas: ITarefa[],
 }
 
-export const key: InjectionKey<Store<Estado>> = Symbol()
+export const key: InjectionKey<Store<State>> = Symbol()
 
-export const store = createStore<Estado>({
+export const store = createStore<State>({
     state: {
-        projetos: []
+        projetos: [],
+        tarefas: []
     },
     mutations: {
         [ADICIONA_PROJETO](state, nomeDoProjeto: string) {
@@ -29,11 +33,22 @@ export const store = createStore<Estado>({
         [EXCLUIR_PROJETO](state, id: string) {
             state.projetos = state.projetos.filter(proj => proj.id != id)
 
-        }
+        },
+        [ADICIONA_TAREFA] (state, tarefa: ITarefa) {
+            tarefa.id = new Date().toISOString()
+            state.tarefas.push(tarefa)
+        },
+        [ATUALIZA_TAREFA](state, tarefa: ITarefa) {
+            const indice = state.tarefas.findIndex(p => p.id == tarefa.id)
+            state.tarefas[indice] = tarefa
+        },
+        [REMOVE_TAREFA] (state, id: string) {
+            state.projetos = state.projetos.filter(p => p.id != id)
+        },
     }
 });
 
 
-export function useStore(): Store<Estado> {
+export function useStore(): Store<State> {
     return vuexUseStore(key)
 }
