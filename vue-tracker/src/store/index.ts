@@ -1,3 +1,4 @@
+import { TipoNotificacao, type INotificacao } from "@/interfaces/INotificacao";
 import type IProjeto from "@/interfaces/IProjeto";
 import type ITarefa from "@/interfaces/ITarefa";
 import type { InjectionKey } from "vue";
@@ -8,6 +9,7 @@ import { ADICIONA_TAREFA, ATUALIZA_TAREFA, REMOVE_TAREFA } from "./tipoMutacoes"
 interface State {
     projetos: IProjeto[],
     tarefas: ITarefa[],
+    notificacoes: INotificacao[]
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -15,7 +17,27 @@ export const key: InjectionKey<Store<State>> = Symbol()
 export const store = createStore<State>({
     state: {
         projetos: [],
-        tarefas: []
+        tarefas: [],
+        notificacoes: [
+            {
+                id: 1,
+                texto: "Uma notificação de sucesso",
+                titulo: 'Sucesso',
+                tipo: TipoNotificacao.SUCESSO
+            },
+            {
+                id: 2,
+                texto: "Uma notificação de atencao",
+                titulo: 'Atenção',
+                tipo: TipoNotificacao.ATENCAO
+            },
+            {
+                id: 3,
+                texto: "Uma notificação de falha",
+                titulo: 'Falha',
+                tipo: TipoNotificacao.FALHA
+            },
+        ]
     },
     mutations: {
         [ADICIONA_PROJETO](state, nomeDoProjeto: string) {
