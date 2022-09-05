@@ -8,6 +8,42 @@ export default defineComponent({
 </script>
 
 <template>
-    <h1>Notificações</h1>
+    <div class="notificacoes">
+        <article class="message is-success">
+            <div class="message-header">
+                Atenção!
+            </div>
+            <div class="message-body">
+                Texto notificação
+            </div>
+        </article>
+        <article class="message is-warning">
+            <div class="message-header">
+                Atenção!
+            </div>
+            <div class="message-body">
+                Texto notificação
+            </div>
+        </article>
+        <article class="message is-danger">
+            <div class="message-header">
+                Atenção!
+            </div>
+            <div class="message-body">
+                Texto notificação
+            </div>
+        </article>
+    </div>
 </template>
 
+<style scoped>
+.notificacoes {
+    position: absolute;
+    right: 0;
+    width: 300px;
+    padding: 8px;
+    z-index: 105;
+}
+
+
+</style>
