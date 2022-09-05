@@ -2,6 +2,8 @@
 import { defineComponent } from 'vue';
 import { useStore } from "@/store";
 import { ALTERA_PROJETO, ADICIONA_PROJETO } from '@/store/tipoMutacoes';
+import { TipoNotificacao } from '@/interfaces/INotificacao';
+import { notificacaoMixin } from '@/mixins/notificar';
 
 export default defineComponent({
     name: 'Formulario',
@@ -11,6 +13,10 @@ export default defineComponent({
             type: String
         }
     },
+
+    mixins: [
+        notificacaoMixin
+    ],
 
     mounted () {
         if(this.id) {
@@ -37,8 +43,11 @@ export default defineComponent({
             }
             
             this.nomeDoProjeto = '';
+            this.notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'Projeto criado com sucesso!')
             this.$router.push('/projetos')
-        }
+        },
+
+
     },
 
     setup () {
