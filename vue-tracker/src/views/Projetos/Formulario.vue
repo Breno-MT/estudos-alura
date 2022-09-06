@@ -34,12 +34,13 @@ export default defineComponent({
                     id: this.id,
                     nome: this.nomeDoProjeto
                 })
+                this.notificar(TipoNotificacao.ATENCAO, 'Editado!', 'Projeto foi editado!')
             } else {
                 this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
+                this.notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'Projeto criado com sucesso!')
             }
             
             this.nomeDoProjeto = '';
-            this.notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'Projeto criado com sucesso!')
             this.$router.push('/projetos')
         },
 
