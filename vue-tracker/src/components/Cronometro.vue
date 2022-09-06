@@ -23,7 +23,7 @@ export default defineComponent({
 
 <template>
     <section>
-        <strong class="display"> {{  tempoDecorrido  }} </strong>
+        <i class="far fa-clock"></i> {{  tempoDecorrido  }}
     </section>
 </template>
 
