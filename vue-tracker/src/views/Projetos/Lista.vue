@@ -4,6 +4,7 @@ import { useStore } from "@/store";
 import { EXCLUIR_PROJETO } from '@/store/tipoMutacoes';
 import useNotificador from '@/hooks/notificador'
 import { TipoNotificacao } from '@/interfaces/INotificacao';
+import { OBTER_PROJETOS } from '@/store/tipoAcoes';
 
 export default defineComponent({
     name: 'Lista',
@@ -18,6 +19,7 @@ export default defineComponent({
     setup() {
         const store = useStore()
         const { notificar } = useNotificador()
+        store.dispatch(OBTER_PROJETOS)
         return {
             projetos: computed(() => store.state.projetos),
             store,
