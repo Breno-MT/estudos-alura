@@ -3,9 +3,9 @@ import type IProjeto from "@/interfaces/IProjeto";
 import type ITarefa from "@/interfaces/ITarefa";
 import type { InjectionKey } from "vue";
 import { createStore, useStore as vuexUseStore, Store } from "vuex";
-import { ALTERAR_PROJETO, CADASTRAR_PROJETOS, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS, REMOVER_PROJETO } from "./tipoAcoes";
-import { ADICIONA_PROJETO, ALTERA_PROJETO, DEFINIR_PROJETO, DEFINIR_TAREFA, EXCLUIR_PROJETO, NOTIFICAR } from "./tipoMutacoes";
-import { ADICIONA_TAREFA, ATUALIZA_TAREFA, REMOVE_TAREFA } from "./tipoMutacoes";
+import { ALTERAR_PROJETO, ALTERAR_TAREFA, CADASTRAR_PROJETOS, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS, REMOVER_PROJETO } from "./tipoAcoes";
+import { ADICIONA_PROJETO, ALTERA_PROJETO, ALTERA_TAREFA, DEFINIR_PROJETO, DEFINIR_TAREFA, EXCLUIR_PROJETO, NOTIFICAR } from "./tipoMutacoes";
+import { ADICIONA_TAREFA, REMOVE_TAREFA } from "./tipoMutacoes";
 import http from "@/http"
 
 
@@ -46,9 +46,9 @@ export const store = createStore<State>({
         [ADICIONA_TAREFA] (state, tarefa: ITarefa) {
             state.tarefas.push(tarefa)
         },
-        [ATUALIZA_TAREFA] (state, tarefa: ITarefa) {
-            const indice = state.tarefas.findIndex(p => p.id == tarefa.id)
-            state.tarefas[indice] = tarefa
+        [ALTERA_TAREFA] (state, tarefa: ITarefa) {
+            const index = state.tarefas.findIndex(t => t.id == tarefa.id)
+            state.tarefas[index] = tarefa
         },
         [REMOVE_TAREFA] (state, id: string) {
             state.projetos = state.projetos.filter(p => p.id != id)
@@ -66,7 +66,7 @@ export const store = createStore<State>({
         }
     },
     actions: {
-        [OBTER_PROJETOS] ({commit}) {
+        [OBTER_PROJETOS] ({ commit }) {
             http.get('projetos')
                 .then(resposta => commit(DEFINIR_PROJETO,resposta.data))
         },
@@ -78,17 +78,21 @@ export const store = createStore<State>({
         [ALTERAR_PROJETO] (context, projeto: IProjeto) {
             return http.put(`/projetos/${projeto.id}`, projeto)
         },
-        [REMOVER_PROJETO] ({ commit }, id: string){
-            return http.delete(`/projetos/${id}`)
-                .then(() => commit(EXCLUIR_PROJETO, id))
+        async [REMOVER_PROJETO] ({ commit }, id: string){
+            await http.delete(`/projetos/${id}`);
+            return commit(EXCLUIR_PROJETO, id);
         },
-        [OBTER_TAREFAS] ({commit}) {
+        [OBTER_TAREFAS] ({ commit }) {
             http.get('tarefas')
                 .then(resposta => commit(DEFINIR_TAREFA,resposta.data))
         },
-        [CADASTRAR_TAREFA] ({ commit }, tarefa: ITarefa) {
-            return http.post('/tarefas', tarefa)
-                .then(resposta => commit(ADICIONA_TAREFA, resposta.data))
+        async [CADASTRAR_TAREFA] ({ commit }, tarefa: ITarefa) {
+            const resposta = await http.post('/tarefas', tarefa);
+            return commit(ADICIONA_TAREFA, resposta.data);
+        },
+        async [ALTERAR_TAREFA] ({ commit }, tarefa: ITarefa) {
+            await http.put(`/tarefas/${tarefa.id}`, tarefa);
+            return commit(ALTERA_TAREFA, tarefa);
         },
     }
 });

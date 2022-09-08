@@ -13,7 +13,7 @@
     {
       "id": 1,
       "duracaoEmSegundos": 120,
-      "descricao": "Configuração do ambiente",
+      "descricao": "TESTE",
       "projeto": {
         "id": 1,
         "nome": "Alura tracker 1.15.2"

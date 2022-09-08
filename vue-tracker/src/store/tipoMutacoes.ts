@@ -11,3 +11,4 @@ export const REMOVE_TAREFA = 'REMOVE_TAREFA'
 export const NOTIFICAR = 'NOTIFICAR'
 
 export const DEFINIR_TAREFA = 'DEFINIR_TAREFA'
+export const ALTERA_TAREFA = 'ALTERA_TAREFA'
