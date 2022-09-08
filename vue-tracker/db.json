@@ -16,8 +16,22 @@
       "descricao": "Configuração do ambiente",
       "projeto": {
         "id": 1,
-        "nome":"Alura tracker 1.15.2"
+        "nome": "Alura tracker 1.15.2"
       }
+    },
+    {
+      "duracaoEmSegundos": 3,
+      "descricao": "123",
+      "id": 2
+    },
+    {
+      "duracaoEmSegundos": 5,
+      "descricao": "melhorando o alura tracker",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura tracker 1.15.2"
+      },
+      "id": 3
     }
   ]
 }

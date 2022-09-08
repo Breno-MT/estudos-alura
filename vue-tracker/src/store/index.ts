@@ -3,7 +3,7 @@ import type IProjeto from "@/interfaces/IProjeto";
 import type ITarefa from "@/interfaces/ITarefa";
 import type { InjectionKey } from "vue";
 import { createStore, useStore as vuexUseStore, Store } from "vuex";
-import { ALTERAR_PROJETO, CADASTRAR_PROJETOS, OBTER_PROJETOS, OBTER_TAREFAS, REMOVER_PROJETO } from "./tipoAcoes";
+import { ALTERAR_PROJETO, CADASTRAR_PROJETOS, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS, REMOVER_PROJETO } from "./tipoAcoes";
 import { ADICIONA_PROJETO, ALTERA_PROJETO, DEFINIR_PROJETO, DEFINIR_TAREFA, EXCLUIR_PROJETO, NOTIFICAR } from "./tipoMutacoes";
 import { ADICIONA_TAREFA, ATUALIZA_TAREFA, REMOVE_TAREFA } from "./tipoMutacoes";
 import http from "@/http"
@@ -44,7 +44,6 @@ export const store = createStore<State>({
             state.projetos = projetos
         },
         [ADICIONA_TAREFA] (state, tarefa: ITarefa) {
-            tarefa.id = new Date().toISOString()
             state.tarefas.push(tarefa)
         },
         [ATUALIZA_TAREFA] (state, tarefa: ITarefa) {
@@ -86,6 +85,10 @@ export const store = createStore<State>({
         [OBTER_TAREFAS] ({commit}) {
             http.get('tarefas')
                 .then(resposta => commit(DEFINIR_TAREFA,resposta.data))
+        },
+        [CADASTRAR_TAREFA] ({ commit }, tarefa: ITarefa) {
+            return http.post('/tarefas', tarefa)
+                .then(resposta => commit(ADICIONA_TAREFA, resposta.data))
         },
     }
 });
