@@ -3,7 +3,7 @@ import type IProjeto from "@/interfaces/IProjeto";
 import type ITarefa from "@/interfaces/ITarefa";
 import type { InjectionKey } from "vue";
 import { createStore, useStore as vuexUseStore, Store } from "vuex";
-import { OBTER_PROJETOS } from "./tipoAcoes";
+import { ALTERAR_PROJETO, CADASTRAR_PROJETOS, OBTER_PROJETOS } from "./tipoAcoes";
 import { ADICIONA_PROJETO, ALTERA_PROJETO, DEFINIR_PROJETO, EXCLUIR_PROJETO, NOTIFICAR } from "./tipoMutacoes";
 import { ADICIONA_TAREFA, ATUALIZA_TAREFA, REMOVE_TAREFA } from "./tipoMutacoes";
 import http from "@/http"
@@ -67,6 +67,14 @@ export const store = createStore<State>({
         [OBTER_PROJETOS] ({commit}) {
             http.get('projetos')
                 .then(resposta => commit(DEFINIR_PROJETO,resposta.data))
+        },
+        [CADASTRAR_PROJETOS] (context, nomeDoProjeto: string) {
+            return http.post('/projetos', {
+                "nome": nomeDoProjeto
+            })
+        },
+        [ALTERAR_PROJETO] (context, projeto: IProjeto) {
+            return http.put(`/projetos/${projeto.id}`, projeto)
         }
     }
 });
