@@ -1,19 +1,17 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import type ITarefa from '../interfaces/ITarefa';
+import { computed, defineComponent } from 'vue';
 import BarraLateral from '../components/BarraLateral.vue';
 import Formulario from '../components/Formulario.vue';
 import Tarefa from '../components/Tarefa.vue';
 import Box from '../components/Box.vue'
+import { OBTER_TAREFAS } from '@/store/tipoAcoes';
+import { useStore } from '@/store';
+import type ITarefa from '@/interfaces/ITarefa';
+
+
 
 export default defineComponent({
     name: 'App',
-
-    data() {
-        return {
-            tarefas: [] as ITarefa[]
-        }
-    },
 
     components: {
         BarraLateral,
@@ -23,16 +21,26 @@ export default defineComponent({
     },
 
     computed: {
-        listaEstaVazia(): boolean {
+        semTarefas(): boolean {
             return this.tarefas.length === 0
         }
     },
-
+    
     methods: {
-        salvarTarefa(tarefa: ITarefa) {
-            this.tarefas.push(tarefa)
-        }
+        // salvarTarefa (tarefa: ITarefa): void {
+        //     this.tarefas.push(tarefa)
+        // }
     },
+    
+    setup() {
+        const store = useStore()
+        store.dispatch(OBTER_TAREFAS)
+        return {
+            tarefas: computed(() => store.state.tarefas),
+            store
+        }
+    }
+
 
 
 })
@@ -41,10 +49,10 @@ export default defineComponent({
     
 <template>
 
-    <Formulario @aoSalvarTarefa="salvarTarefa" />
+    <Formulario />
     <div class="lista">
         <Tarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" />
-        <Box v-if="listaEstaVazia">
+        <Box v-if="semTarefas">
             Você não está muito produtivo hoje! :(
         </Box>
     </div>

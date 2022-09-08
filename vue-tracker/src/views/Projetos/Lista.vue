@@ -1,17 +1,16 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from "@/store";
-import { EXCLUIR_PROJETO } from '@/store/tipoMutacoes';
 import useNotificador from '@/hooks/notificador'
 import { TipoNotificacao } from '@/interfaces/INotificacao';
-import { OBTER_PROJETOS } from '@/store/tipoAcoes';
+import { OBTER_PROJETOS, REMOVER_PROJETO } from '@/store/tipoAcoes';
 
 export default defineComponent({
     name: 'Lista',
 
     methods: {
         excluir (id: string) {
-            this.store.commit(EXCLUIR_PROJETO, id)
+            this.store.dispatch(REMOVER_PROJETO, id)
             this.notificar(TipoNotificacao.FALHA, 'Excluído!', 'Projeto foi excluído!')
         }
     },
