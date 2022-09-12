@@ -7,6 +7,7 @@ import Box from '../components/Box.vue'
 import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/tipoAcoes';
 import { useStore } from '@/store';
 import type ITarefa from '@/interfaces/ITarefa';
+import Modal from '../components/Modal.vue';
 
 
 
@@ -14,11 +15,12 @@ export default defineComponent({
     name: 'App',
 
     components: {
-        BarraLateral,
-        Formulario,
-        Tarefa,
-        Box
-    },
+    BarraLateral,
+    Formulario,
+    Tarefa,
+    Box,
+    Modal
+},
 
     data () {
         return {
@@ -97,14 +99,12 @@ export default defineComponent({
         <Tarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" 
         @ao-tarefa-clicada="selecionarTarefa"
         />
-        <div class="modal" :class="{ 'is-active': tarefaSelecionada }" v-if="tarefaSelecionada">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
+        <Modal :mostrar="tarefaSelecionada != null">
+            <template v-slot:cabecalho>
                     <p class="modal-card-title">Editar Tarefa</p>
                     <button @click="fecharModal" class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
+            </template>
+                <template v-slot:corpo>
                     <div class="field">
                         <label for="descricaoDaTarefa" class="label">
                             Descrição
@@ -116,13 +116,13 @@ export default defineComponent({
                         id="descricaoDaTarefa"
                         >
                     </div>
-                </section>
-                <footer class="modal-card-foot">
+                </template>
+
+                <template v-slot:rodape>
                     <button @click="alterarTarefa" class="button is-success">Salvar Alterações</button>
                     <button @click="fecharModal" class="button">Cancelar</button>
-                </footer>
-            </div>
-        </div>
+                </template>
+        </Modal>
     </div>
 
 </template>
