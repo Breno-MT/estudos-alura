@@ -47,16 +47,16 @@ export default defineComponent({
             this.tarefaSelecionada = null
         }
     },
-    
+
     setup() {
-        const store = useStore()
-        store.dispatch(OBTER_TAREFAS)
-        store.dispatch(OBTER_PROJETOS)
+        const store = useStore();
+        store.dispatch(OBTER_TAREFAS);
+        store.dispatch(OBTER_PROJETOS);
         return {
-            tarefas: computed(() => store.state.tarefas),
-            store
-        }
-    }
+        tarefas: computed(() => store.state.tarefa.tarefas),
+        store,
+        };
+    },
 
 
 
