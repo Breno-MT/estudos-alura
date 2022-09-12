@@ -17,7 +17,7 @@
     {
       "id": 1,
       "duracaoEmSegundos": 120,
-      "descricao": "TESTE",
+      "descricao": "Testando lhe",
       "projeto": {
         "id": 1,
         "nome": "Alura tracker 1.15.2"
