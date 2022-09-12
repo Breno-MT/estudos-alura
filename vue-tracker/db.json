@@ -7,6 +7,10 @@
     {
       "nome": "NuBank Testes",
       "id": 2
+    },
+    {
+      "nome": "Estudar vuejs",
+      "id": 3
     }
   ],
   "tarefas": [
